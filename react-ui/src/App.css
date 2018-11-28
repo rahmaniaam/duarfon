@@ -1,28 +1,60 @@
+@font-face {
+  font-family: OmnesReg;
+  src: url("fonts/omnes-regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: OmnesBold;
+  src: url("fonts/omnes-medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: OmnesLight;
+  src: url("fonts/omnes-light.otf") format("opentype");
+}
+
 .App {
+  color: #fff;
+  background-color: #141414;
+  font-family: OmnesLight, sans-serif;
+  user-select: none;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.header {
+  font-size: 4rem;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.large-contents {
+  width: 65%;
 }
 
-.App-intro {
-  font-size: large;
+.small-contents {
+  width: 30rem;
 }
 
-.App a {
-  color: #f60;
+.contents {
+  font-size: 1rem;
+  line-height: 1.75rem;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.buttons {
+  display: flex;
+}
+
+.panels {
+  display: flex;
+  justify-content: space-around;
+}
+
+.panel {
+  margin: 1rem;
 }
