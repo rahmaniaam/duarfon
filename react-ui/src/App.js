@@ -8,6 +8,10 @@ import NextArrow from './assets/NextArrow.svg';
 
 class App extends Component {
 
+  onClickUpload() {
+    console.log("hai");
+  }
+
   render() {
     return (
       <div className="App">
@@ -87,7 +91,7 @@ class App extends Component {
           <div className="contents small-contents">
             Upload your file
           </div>
-          <UploadButton></UploadButton>
+          <UploadButton />
         </div>
         <div className="container">
           <div className="header">

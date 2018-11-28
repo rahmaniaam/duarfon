@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 // import PropTypes from 'prop-types';
 
 import Button from '../Button';
@@ -10,25 +11,54 @@ class UploadButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: '',
+      file: null,
+      filename: '',
     }
     this.onClickUpload = this.onClickUpload.bind(this)
   }
 
+  handleChange() {
+    const file = document.getElementById('file-input');
+    console.log(file.value);
+    this.setState({
+      file: file.files,
+      filename: file.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1] + '',
+    })
+  }
+
   onClickUpload() {
-    // const file = document.getElementById('file-input');
-    // file.click();
-    console.log("yoo");
-    
+    const file = document.getElementById('file-input');
+    file.click();
+  }
+
+  onUpload() {
+    const { file, filename } = this.state;
+    const data = new FormData()
+    data.append('file', file, filename)
+
+    axios
+      .post('/upload', data)
+      .then(res => {
+        console.log(res.statusText)
+      })
+    console.log(file.files[0]);
+    console.log(file.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]);
   }
 
   render() {
+    // <Button onClick={() => console.log("hei")} text="Upload" center={true}/>
+    // <Button onClick={() => this.onClickUpload()} text="Next" center={false}/>
+    const { filename } = this.state;
+
     return (
       <UploadButtonContainer>
         <Button src={UploadArrow} />
         <input type="file" id="file-input" hidden></input>
-        <Button text="Upload" center={true}/>
-        <Button text="Next" center={false}/>
+        
+        <button type="button" onClick={() => this.onClickUpload()}>Upload</button>
+        <button type="submit" onClick={() => this.onUpload()}>Next</button>
+        
+        <p>{filename}</p>
       </UploadButtonContainer>
     );
   }
