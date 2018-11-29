@@ -21,7 +21,7 @@ class UploadButton extends Component {
     const file = document.getElementById('file-input');
     console.log(file.value);
     this.setState({
-      file: file.files,
+      file: file.files[0],
       filename: file.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1] + '',
     })
   }
@@ -33,14 +33,18 @@ class UploadButton extends Component {
 
   onUpload() {
     const { file, filename } = this.state;
-    const data = new FormData()
-    data.append('file', file, filename)
 
-    axios
-      .post('/upload', data)
-      .then(res => {
-        console.log(res.statusText)
-      })
+    if (file) {
+      const data = new FormData()
+      data.append('file', file, filename);
+  
+      axios
+        .post('http://localhost:5000/upload', data)
+        .then(res => {
+          console.log(res.statusText)
+        })
+    }
+    
     console.log(file.files[0]);
     console.log(file.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1]);
   }
