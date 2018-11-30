@@ -1,18 +1,42 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Button from './components/Button';
 import UploadButton from './components/UploadButton';
+import Column from './components/Column';
 
-import NextArrow from './assets/NextArrow.svg';
+import Team from './assets/Team.svg'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: null,
+    }
+  }
 
-  onClickUpload() {
-    console.log("hai");
+  isEmptyData() {
+    const { data } = this.state;
+
+    return data === null;
+  }
+
+  onClickUpload = (data) => {
+    this.setState({
+      data: data
+    })
+  }
+
+  renderResults = (data) => {
+    const ids = data.X;
+    const results = data.flag_transaksi_fraud;
+    return ids.map((id, index) => {
+      <Column data={{id: id, result: results[index]}} />
+    });
   }
 
   render() {
+    const { data } = this.state;
+
     return (
       <div className="App">
         <div className="container">
@@ -62,23 +86,18 @@ class App extends Component {
           <div className="contents large-contents">
             <div className="panels">
               <div className="panel">
-                Prepare your data.  
-                It must contain these categories: wawawa. 
-                You can also include additional categories.
-              </div>
-              <div className="panel">
-                You can input your file manualy to the availabe fields or 
-                upload your  own .csv format file. 
-                Click here to see .csv exmple file. 
+                Prepare your data.
+                <br/>
+                It must contain those categories 
+                <br/>
+                that can be seen in .csv example file.
               </div>
               <div className="panel">
                 Scroll down. 
-                Upload your file by clicking the ‘Upload’ button, 
-                then click ‘Next’.
-              </div>
-              <div className="panel">
-                Or scroll down again. 
-                Fill the fileds based on the category.
+                <br/>
+                Upload your file by clicking
+                <br/>
+                the ‘Upload’ button, then click ‘Next’.
               </div>
             </div>
           </div>
@@ -89,21 +108,33 @@ class App extends Component {
           </div>
           <br></br>
           <div className="contents small-contents">
-            Upload your file
+            Upload your .csv file
           </div>
-          <UploadButton />
+          <UploadButton onClickNext={this.onClickUpload} />
         </div>
+        {
+          !this.isEmptyData()
+          && <div className="container">
+              <div className="header">
+                Your Result is Here!
+              </div>
+              <br></br>
+              <div className="contents small-contents">
+                <div className="table">
+                  <div className="column">ID</div>
+                  <div className="column">Result</div>
+                </div>
+                {this.renderResults(data)}
+              </div>
+            </div>
+        }
         <div className="container">
           <div className="header">
-            Try It Now!
+            Our Team
           </div>
           <br></br>
           <div className="contents small-contents">
-            Input it manually
-          </div>
-          <div className="buttons">
-            <Button src={NextArrow} />
-            <Button text="Next" center={false}/>
+            <img className="team-image" src={Team} alt="the-team" />
           </div>
         </div>
       </div>
