@@ -40,14 +40,13 @@ class UploadButton extends Component {
       data.append('file', file, filename);
     
       axios
-        .get('https://http://localhost:8000/api/v1/predict/')
+        .post('http://localhost:5000/upload', data)
         .then(res => {
-          console.log(res.body)
-          this.props.onClickNext(res.body)
+          this.props.onClickNext(res.data)
         })
         .catch(function (error) {
           // handle error
-          console.log(error);
+          console.log(error.response);
         })
     }
     // console.log(file.files[0]);
@@ -91,15 +90,17 @@ class UploadButton extends Component {
     }
 
     return (
-      <UploadButtonContainer>
-        <Button src={UploadArrow} />
-        <input onChange={(e) => this.handleChange(e)} type="file" id="file-input" hidden></input>
-        
-        <button style={uploadButtonStyle} type="button" onClick={() => this.onClickUpload()}>Upload</button>
-        <button style={nextButtonStyle} type="submit" onClick={() => this.onUpload()}>Next</button>
-        <br/>
+      <React.Fragment>
+        <UploadButtonContainer>
+          <Button src={UploadArrow} />
+          <input onChange={(e) => this.handleChange(e)} type="file" id="file-input" name="file" hidden></input>
+          
+          <button style={uploadButtonStyle} type="button" onClick={() => this.onClickUpload()}>Upload</button>
+          <button style={nextButtonStyle} type="submit" onClick={() => this.onUpload()}>Next</button>
+          <br/>
+        </UploadButtonContainer>
         <p>{filename}</p>
-      </UploadButtonContainer>
+      </React.Fragment>
     );
   }
 }

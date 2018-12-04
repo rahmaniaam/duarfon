@@ -1,0 +1,10 @@
+numpy>=1.9.3
+pytz>=2011k
+pandas>=0.15.2
+python-dateutil>=2.5.0
+cycler>=0.10
+pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1
+kiwisolver>=1.0.1
+six>=1.5.0
+setuptools>=40.6.2
+scipy>=0.14.0

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import UploadButton from './components/UploadButton';
-import Column from './components/Column';
+import ResultPage from './containers/ResultPage';
 
 import Team from './assets/Team.svg'
 
@@ -26,17 +26,8 @@ class App extends Component {
     })
   }
 
-  renderResults = (data) => {
-    const ids = data.X;
-    const results = data.flag_transaksi_fraud;
-    return ids.map((id, index) => {
-      <Column data={{id: id, result: results[index]}} />
-    });
-  }
-
   render() {
     const { data } = this.state;
-
     return (
       <div className="App">
         <div className="container">
@@ -114,20 +105,9 @@ class App extends Component {
         </div>
         {
           !this.isEmptyData()
-          && <div className="container">
-              <div className="header">
-                Your Result is Here!
-              </div>
-              <br></br>
-              <div className="contents small-contents">
-                <div className="table">
-                  <div className="column">ID</div>
-                  <div className="column">Result</div>
-                </div>
-                {this.renderResults(data)}
-              </div>
-            </div>
+            && <ResultPage data={data} />
         }
+        
         <div className="container">
           <div className="header">
             Our Team

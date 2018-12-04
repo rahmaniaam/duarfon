@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer  = require('multer');
+const csvtojson = require("csvtojson");
+    
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -48,12 +50,21 @@ if (cluster.isMaster) {
 } else {
   const app = express();
 
+  const allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  }
+
   // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
   
   app.use('ml/', express.static('ml'))
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
+
+  app.use(allowCrossDomain);
 
   // Answer API requests.
   app.get('/api', function (req, res) {
@@ -71,15 +82,15 @@ if (cluster.isMaster) {
   });
 
   // DuarfOn API handlers
-  app.post('/upload', upload.single('csvFile'), (req, res, next) => {
-    const uploadFile = req.file;
-    const fileName = req.file.filename;
-    
-    
-    res.json({
-      msg: fileName
+  app.post('/upload', upload.single('file'), (req, res) => {
+    // const { exec, spawn } = require('child_process');
+    // exec('source env/bin/activate');
+    // spawn('python',["ml/Final.py"]);
+    csvtojson()
+    .fromFile('ml/predictionResult.csv')
+    .then((jsonObj)=>{
+        res.send(jsonObj);
     })
-    console.log(uploadFile)
   })
 }
 

@@ -5,13 +5,15 @@ import { ColumnContainer } from './style';
 
 class Column extends Component {
   render() {
-    const { id, result } = this.props.data;
+    const { X, flag_transaksi_fraud } = this.props.data;
+    
+    const id = parseInt(X);
     let str = '';
 
-    if (result === 0) {
-      str = 'NOT FRAUD';
+    if (parseInt(flag_transaksi_fraud) === 0) {
+      str = 'Not Fraud';
     } else {
-      str = 'FRAUD';
+      str = 'Fraud';
     }
 
     return (
@@ -25,8 +27,8 @@ class Column extends Component {
 
 Column.propTypes = {
   data: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    result: PropTypes.number.isRequired,
+    X: PropTypes.string.isRequired,
+    flag_transaksi_fraud: PropTypes.string.isRequired,
   }).isRequired,
 }
 

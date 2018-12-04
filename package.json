@@ -7,15 +7,20 @@
   },
   "scripts": {
     "start": "node server",
-    "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "cd react-ui/ && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "postinstall": "virtualenv-postinstall"
   },
   "cacheDirectories": [
     "node_modules",
     "react-ui/node_modules"
   ],
   "dependencies": {
+    "csvtojson": "^2.0.8",
     "express": "^4.16.3",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "pip": "0.0.1",
+    "python-shell": "^1.0.6",
+    "virtualenv": "^0.3.1"
   },
   "repository": {
     "type": "git",

@@ -178,16 +178,18 @@ datatest = train[100:13125].values
 fortest = list()
 for row in datatest:
     fortest.append(row[-1])
-pred = decisionTree(dataTrain, datatest, max_depth, min_size)
+
+actual = pd.read_csv("csvFile.csv").values
+pred = decisionTree(dataTrain, actual, max_depth, min_size)
 score = accuracy(fortest, pred)
-print(score)
+# print(score)
 
 result = list()
 for x in range(datatest.shape[0]):
     result.append([datatest[x][0], pred[x]])
-print(len(result))
+# print(len(result))
 
-print("target: {}\n".format(str(target)))
+# print("target: {}\n".format(str(target)))
 count0 = 0
 count1 = 0
 for row in result:
@@ -195,26 +197,26 @@ for row in result:
         count0 += 1
     if row[1]==1.0:
         count1 += 1
-print("0:\t {}".format(str(count0)))
-print("1:\t {}".format(str(count1)))
+# print("0:\t {}".format(str(count0)))
+# print("1:\t {}".format(str(count1)))
 
 results = pd.DataFrame(result, columns=['X', target])
 
-results[target].hist()
-plt.xlabel(target)
-plt.ylabel('jumlah_transaksi')
-plt.show()
+# results[target].hist()
+# plt.xlabel(target)
+# plt.ylabel('jumlah_transaksi')
+# plt.show()
 
-labels = 'X', 'flag_transaksi_fraud'
-xSize = count0/(count0+count1)
-flagSize = count1/(count0+count1)
-sizes = [xSize, flagSize]
-explode = (0, 0.1)
+# labels = 'X', 'flag_transaksi_fraud'
+# xSize = count0/(count0+count1)
+# flagSize = count1/(count0+count1)
+# sizes = [xSize, flagSize]
+# explode = (0, 0.1)
 
-fig1, ax1 = plt.subplots()
-ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', startangle=90)
-ax1.axis('equal')
+# fig1, ax1 = plt.subplots()
+# ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%', startangle=90)
+# ax1.axis('equal')
 
-plt.show()
+# plt.show()
 
 results.to_csv('predictionResult.csv')
