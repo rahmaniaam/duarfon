@@ -4,7 +4,8 @@ import './App.css';
 import UploadButton from './components/UploadButton';
 import ResultPage from './containers/ResultPage';
 
-import Team from './assets/Team.svg'
+import Team from './assets/Team.svg';
+
 
 class App extends Component {
   constructor(props) {
